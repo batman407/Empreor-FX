@@ -10,11 +10,12 @@ import Footer from './components/Footer'
 import LandingPage from './pages/LandingPage'
 import TradePage from './pages/TradePage'
 import DashboardPage from './pages/DashboardPage'
+import AdminDashboardPage from './pages/AdminDashboardPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 
 // Pages that hide footer
-const NO_FOOTER = ['/trade', '/dashboard']
+const NO_FOOTER = ['/trade', '/dashboard', '/admin']
 
 export default function App() {
   const { showIntro } = useStore()
@@ -58,6 +59,7 @@ export default function App() {
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/admin" element={<AdminDashboardPage />} />
               </Routes>
             </AnimatePresence>
             {!hideFooter && <Footer />}
