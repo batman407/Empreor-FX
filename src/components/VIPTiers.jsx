@@ -95,7 +95,7 @@ export default function VIPTiers() {
         </motion.div>
 
         {/* Tier cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '48px' }}>
+        <div id="vip-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '48px' }}>
           {tiers.map((tier, i) => (
             <motion.div
               key={tier.name}
@@ -153,10 +153,10 @@ export default function VIPTiers() {
 
       <style>{`
         @media (max-width: 1000px) {
-          #vip > div > div:nth-child(2) { grid-template-columns: repeat(2, 1fr) !important; }
+          #vip-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 600px) {
-          #vip > div > div:nth-child(2) { grid-template-columns: 1fr !important; }
+          #vip-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>

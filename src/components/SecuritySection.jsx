@@ -43,6 +43,7 @@ export default function SecuritySection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          id="security-layout"
           style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}
         >
           {/* Left */}
@@ -97,7 +98,7 @@ export default function SecuritySection() {
           </div>
 
           {/* Right: Security grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div id="security-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             {securityItems.map((item, i) => {
               const Icon = item.icon
               return (
@@ -134,7 +135,10 @@ export default function SecuritySection() {
 
       <style>{`
         @media (max-width: 900px) {
-          #security > div > div { grid-template-columns: 1fr !important; gap: 40px !important; }
+          #security-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+        @media (max-width: 600px) {
+          #security-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>

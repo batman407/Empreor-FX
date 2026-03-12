@@ -72,7 +72,7 @@ export default function EarnStaking() {
           </p>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+        <div id="earn-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
           {stakingOptions.map((option, i) => (
             <motion.div
               key={option.symbol}
@@ -147,10 +147,10 @@ export default function EarnStaking() {
 
       <style>{`
         @media (max-width: 1100px) {
-          #earn > div > div:last-child { grid-template-columns: repeat(2, 1fr) !important; }
+          #earn-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 600px) {
-          #earn > div > div:last-child { grid-template-columns: 1fr !important; }
+          #earn-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>

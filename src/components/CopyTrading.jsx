@@ -70,7 +70,7 @@ export default function CopyTrading() {
           transition={{ duration: 0.6 }}
           style={{ marginBottom: '60px' }}
         >
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
+          <div id="copy-trading-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
             <div>
               <div className="section-tag" style={{ marginBottom: '20px' }}>
                 <Copy size={12} />
@@ -110,7 +110,7 @@ export default function CopyTrading() {
             </div>
 
             <div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div id="copy-trader-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 {traders.map((trader, i) => (
                   <motion.div
                     key={trader.name}
@@ -183,8 +183,11 @@ export default function CopyTrading() {
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          #copy-trading > div > div > div { grid-template-columns: 1fr !important; }
+        @media (max-width: 960px) {
+          #copy-trading-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+        @media (max-width: 600px) {
+          #copy-trader-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>
