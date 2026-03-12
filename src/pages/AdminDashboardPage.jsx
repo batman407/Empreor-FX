@@ -15,6 +15,12 @@ export default function AdminDashboardPage() {
   const [mockMode, setMockMode] = useState(false)
 
   useEffect(() => {
+    // Basic route protection
+    if (sessionStorage.getItem('adminAuth') !== 'true') {
+      navigate('/admin-login')
+      return
+    }
+
     if (!supabase) {
       setLoading(false)
       return
@@ -144,7 +150,10 @@ VITE_SUPABASE_ANON_KEY=your-long-anon-key-here
 
         <div style={{ marginTop: 'auto' }}>
           <button
-            onClick={() => navigate('/dashboard')}
+            onClick={() => {
+              sessionStorage.removeItem('adminAuth')
+              navigate('/')
+            }}
             style={{
               display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', borderRadius: '8px',
               background: 'transparent', color: '#6B6B78', border: 'none', fontWeight: 600, fontSize: '14px',
