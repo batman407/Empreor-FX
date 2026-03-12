@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useNavigate, Link } from 'react-router-dom'
 import { Eye, EyeOff, ChevronRight } from 'lucide-react'
 import useStore from '../store/useStore'
+import { supabase } from '../lib/supabase'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -17,11 +18,28 @@ export default function LoginPage() {
     if (!form.email || !form.password) { setError('Please fill in all fields'); return }
     setLoading(true)
     setError('')
-    // Simulate auth
-    await new Promise(r => setTimeout(r, 1200))
-    login({ email: form.email, name: form.email.split('@')[0], joined: new Date().toISOString() })
-    setLoading(false)
-    navigate('/dashboard')
+    
+    try {
+      if (supabase) {
+        // Find user by email in the database
+        const { data, error } = await supabase.from('profiles').select('name').eq('email', form.email)
+        if (error || !data || data.length === 0) {
+          setError('Invalid email or password')
+          setLoading(false)
+          return
+        }
+        login({ email: form.email, name: data[0].name, joined: new Date().toISOString() })
+      } else {
+        await new Promise(r => setTimeout(r, 1200))
+        login({ email: form.email, name: form.email.split('@')[0], joined: new Date().toISOString() })
+      }
+      navigate('/dashboard')
+    } catch (err) {
+      console.error(err)
+      setError('Something went wrong')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

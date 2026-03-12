@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useNavigate, Link } from 'react-router-dom'
 import { Eye, EyeOff, Check, ChevronRight } from 'lucide-react'
 import useStore from '../store/useStore'
+import { supabase } from '../lib/supabase'
 
 const features = ['$10,000 demo balance', 'Real-time market data', 'Copy trading access', 'Zero fees on demo']
 
@@ -22,10 +23,35 @@ export default function RegisterPage() {
     if (!agreed) { setError('Please accept the terms of service'); return }
     setLoading(true)
     setError('')
-    await new Promise(r => setTimeout(r, 1500))
-    login({ email: form.email, name: form.name, joined: new Date().toISOString() })
-    setLoading(false)
-    navigate('/dashboard')
+    
+    try {
+      if (supabase) {
+        // Check if user exists
+        const { data: existing } = await supabase.from('profiles').select('email').eq('email', form.email)
+        if (existing && existing.length > 0) {
+          setError('Email is already registered')
+          setLoading(false)
+          return
+        }
+        
+        // Insert new user into database
+        const { error: insertError } = await supabase.from('profiles').insert([
+          { name: form.name, email: form.email, balance: 10000.00 }
+        ])
+        
+        if (insertError) throw insertError
+      } else {
+        await new Promise(r => setTimeout(r, 1500))
+      }
+
+      login({ email: form.email, name: form.name, joined: new Date().toISOString() })
+      navigate('/dashboard')
+    } catch (err) {
+      console.error(err)
+      setError(err.message || 'Error creating account')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
