@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts'
-import { TrendingUp, TrendingDown, Wallet, ArrowUpRight, ArrowDownRight, Clock, BarChart2, Settings, LogOut, ChevronRight } from 'lucide-react'
+import { TrendingUp, Wallet, ArrowUpRight, ArrowDownRight, Clock, BarChart2, Settings, LogOut, ChevronRight, Zap } from 'lucide-react'
 import useStore from '../store/useStore'
 import { fetchMarketData } from '../services/api'
 
@@ -18,7 +18,7 @@ const sideItems = [
 
 export default function DashboardPage() {
   const navigate = useNavigate()
-  const { isLoggedIn, user, logout, demoBalance, portfolio, demoTransactions, marketData, setMarketData } = useStore()
+  const { isLoggedIn, user, logout, demoBalance, liveBalance, accountMode, setAccountMode, fetchWallets, portfolio, demoTransactions, marketData, setMarketData } = useStore()
 
   useEffect(() => {
     if (!isLoggedIn) navigate('/login')
@@ -30,9 +30,13 @@ export default function DashboardPage() {
         const data = await fetchMarketData()
         setMarketData(data)
       }
+      // Fetch real wallet balances if logged in
+      fetchWallets()
     }
     load()
-  }, [marketData.length, setMarketData])
+  }, [marketData.length, setMarketData, fetchWallets])
+
+  const activeBalance = accountMode === 'live' ? liveBalance : demoBalance
 
   // Build portfolio pie data
   const portfolioItems = [
@@ -58,12 +62,12 @@ export default function DashboardPage() {
       color: '#D4AF37',
     },
     {
-      label: 'Available USDT',
-      value: `$${demoBalance.toFixed(2)}`,
-      change: 'Demo Balance',
+      label: accountMode === 'live' ? 'Live Balance' : 'Demo Balance',
+      value: `$${activeBalance.toFixed(2)}`,
+      change: accountMode === 'live' ? '🔴 Live' : '🟢 Demo',
       isUp: true,
       icon: TrendingUp,
-      color: '#00C896',
+      color: accountMode === 'live' ? '#FF4D4F' : '#00C896',
     },
     {
       label: 'Open Positions',
@@ -117,9 +121,9 @@ export default function DashboardPage() {
             {user?.name?.[0]?.toUpperCase() || 'U'}
           </div>
           <div style={{ fontWeight: 600, fontSize: '14px', color: '#F5F5F5', marginBottom: '2px' }}>
-            {user?.name || 'Emperor Trader'}
+            {user?.name || user?.first_name || 'Emperor Trader'}
           </div>
-          <div style={{ fontSize: '11px', color: '#6B6B78' }}>Silver Member</div>
+          <div style={{ fontSize: '11px', color: '#6B6B78' }}>{user?.role === 'admin' ? '👑 Admin' : 'Silver Member'}</div>
         </div>
 
         {/* Nav items */}
@@ -149,10 +153,25 @@ export default function DashboardPage() {
           )
         })}
 
+        {/* Account Mode Toggle */}
+        <div style={{ margin: '16px 0', padding: '4px', background: 'rgba(255,255,255,0.04)', borderRadius: '10px', border: '1px solid rgba(212,175,55,0.1)', display: 'flex' }}>
+          {['demo', 'live'].map(mode => (
+            <button key={mode} onClick={() => setAccountMode(mode)} style={{
+              flex: 1, padding: '8px', borderRadius: '8px', border: 'none', cursor: 'pointer',
+              background: accountMode === mode ? (mode === 'live' ? 'rgba(255,77,79,0.2)' : 'rgba(0,200,150,0.15)') : 'transparent',
+              color: accountMode === mode ? (mode === 'live' ? '#FF4D4F' : '#00C896') : '#6B6B78',
+              fontSize: '12px', fontWeight: 600, textTransform: 'capitalize',
+              transition: 'all 0.2s ease',
+            }}>
+              {mode === 'live' ? '🔴' : '🟢'} {mode}
+            </button>
+          ))}
+        </div>
+
         {/* Logout */}
         <div style={{ marginTop: 'auto' }}>
           <button
-            onClick={() => { logout(); navigate('/') }}
+            onClick={async () => { await logout(); navigate('/') }}
             style={{
               display: 'flex', alignItems: 'center', gap: '10px',
               padding: '11px 14px', borderRadius: '8px',
@@ -172,13 +191,27 @@ export default function DashboardPage() {
       {/* Main content */}
       <div style={{ marginLeft: '220px', flex: 1, padding: '32px' }}>
         {/* Header */}
-        <div style={{ marginBottom: '32px' }}>
-          <h1 style={{ fontFamily: 'Cinzel, serif', fontSize: '28px', fontWeight: 700, color: '#F5F5F5' }}>
-            Welcome back, <span className="text-gold-gradient">{user?.name || 'Emperor'}</span>
-          </h1>
-          <p style={{ color: '#6B6B78', marginTop: '6px', fontSize: '14px' }}>
-            Here's your portfolio overview for today
-          </p>
+        <div style={{ marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div>
+            <h1 style={{ fontFamily: 'Cinzel, serif', fontSize: '28px', fontWeight: 700, color: '#F5F5F5' }}>
+              Welcome back, <span className="text-gold-gradient">{user?.name || user?.first_name || 'Emperor'}</span>
+            </h1>
+            <p style={{ color: '#6B6B78', marginTop: '6px', fontSize: '14px' }}>
+              Here's your portfolio overview for today
+            </p>
+          </div>
+          {/* Account mode badge */}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '8px',
+            padding: '8px 16px', borderRadius: '20px',
+            background: accountMode === 'live' ? 'rgba(255,77,79,0.1)' : 'rgba(0,200,150,0.1)',
+            border: `1px solid ${accountMode === 'live' ? 'rgba(255,77,79,0.3)' : 'rgba(0,200,150,0.3)'}`,
+          }}>
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: accountMode === 'live' ? '#FF4D4F' : '#00C896', animation: 'pulse 2s infinite' }} />
+            <span style={{ fontSize: '13px', fontWeight: 600, color: accountMode === 'live' ? '#FF4D4F' : '#00C896' }}>
+              {accountMode === 'live' ? 'LIVE ACCOUNT' : 'DEMO ACCOUNT'}
+            </span>
+          </div>
         </div>
 
         {/* Stat cards */}
@@ -365,6 +398,10 @@ export default function DashboardPage() {
         @media (max-width: 900px) {
           #dashboard-stats { grid-template-columns: repeat(2, 1fr) !important; }
           #dashboard-charts { grid-template-columns: 1fr !important; }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
         }
       `}</style>
     </div>
