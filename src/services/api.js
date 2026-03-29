@@ -187,13 +187,17 @@ const COINGECKO_BASE = 'https://api.coingecko.com/api/v3'
 export const fetchMarketData = async () => {
   try {
     const { data } = await marketAPI.getPrices()
-    return data.data
+    if (data && Array.isArray(data.data) && data.data.length > 0) {
+      return data.data
+    }
+    throw new Error('Backend returned invalid market data array')
   } catch {
     try {
       const { data } = await axios2.get(`${COINGECKO_BASE}/coins/markets`, {
         params: { vs_currency: 'usd', order: 'market_cap_desc', per_page: 20, page: 1, sparkline: false },
       })
-      return data
+      if (Array.isArray(data) && data.length > 0) return data
+      return getFallbackData()
     } catch {
       return getFallbackData()
     }

@@ -46,7 +46,9 @@ export default function HeroSection() {
       setLoadingMarket(true)
       const data = await fetchMarketData()
       setMarketData(data)
-      setTickerData(data.filter(c => TICKER_SYMBOLS.includes(c.symbol.toUpperCase())))
+      if (Array.isArray(data)) {
+        setTickerData(data.filter(c => c && c.symbol && TICKER_SYMBOLS.includes(c.symbol.toUpperCase())))
+      }
       setLoadingMarket(false)
     }
     load()
