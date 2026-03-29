@@ -49,8 +49,8 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173')
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow Postman/cURL, matching origins, or any local dev port
-    if (!origin || allowedOrigins.includes(origin) || origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+    // Allow Postman/cURL, matching origins, any local dev port, or Vercel
+    if (!origin || allowedOrigins.includes(origin) || origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:') || origin.endsWith('.vercel.app')) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS: ' + origin))
