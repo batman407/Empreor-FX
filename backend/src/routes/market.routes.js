@@ -85,11 +85,11 @@ router.get('/coin/:id', async (req, res) => {
 
 function getFallbackPrices() {
   return [
-    { id: 'bitcoin', symbol: 'btc', name: 'Bitcoin', current_price: 67450, price_change_percentage_24h: 2.34, market_cap: 1327000000000 },
-    { id: 'ethereum', symbol: 'eth', name: 'Ethereum', current_price: 3580, price_change_percentage_24h: 1.87, market_cap: 430000000000 },
-    { id: 'solana', symbol: 'sol', name: 'Solana', current_price: 182, price_change_percentage_24h: 4.15, market_cap: 82000000000 },
-    { id: 'binancecoin', symbol: 'bnb', name: 'BNB', current_price: 425, price_change_percentage_24h: 0.92, market_cap: 65000000000 },
-    { id: 'ripple', symbol: 'xrp', name: 'XRP', current_price: 0.62, price_change_percentage_24h: -1.23, market_cap: 34000000000 },
+    { id: 'bitcoin', symbol: 'btc', name: 'Bitcoin', image: 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/btc.png', current_price: 67450, price_change_percentage_24h: 2.34, market_cap: 1327000000000 },
+    { id: 'ethereum', symbol: 'eth', name: 'Ethereum', image: 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/eth.png', current_price: 3580, price_change_percentage_24h: 1.87, market_cap: 430000000000 },
+    { id: 'solana', symbol: 'sol', name: 'Solana', image: 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/sol.png', current_price: 182, price_change_percentage_24h: 4.15, market_cap: 82000000000 },
+    { id: 'binancecoin', symbol: 'bnb', name: 'BNB', image: 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/bnb.png', current_price: 425, price_change_percentage_24h: 0.92, market_cap: 65000000000 },
+    { id: 'ripple', symbol: 'xrp', name: 'XRP', image: 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/xrp.png', current_price: 0.62, price_change_percentage_24h: -1.23, market_cap: 34000000000 },
   ]
 }
 

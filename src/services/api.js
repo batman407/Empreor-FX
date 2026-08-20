@@ -205,10 +205,11 @@ export const fetchMarketData = async () => {
 }
 
 export const getFallbackData = () => [
-  { id: 'bitcoin', symbol: 'btc', name: 'Bitcoin', image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png', current_price: 67450, price_change_percentage_24h: 2.34, market_cap: 1327000000000, total_volume: 28500000000, market_cap_rank: 1 },
-  { id: 'ethereum', symbol: 'eth', name: 'Ethereum', image: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png', current_price: 3580, price_change_percentage_24h: 1.87, market_cap: 430000000000, total_volume: 14200000000, market_cap_rank: 2 },
-  { id: 'solana', symbol: 'sol', name: 'Solana', image: 'https://assets.coingecko.com/coins/images/4128/large/solana.png', current_price: 182, price_change_percentage_24h: 4.15, market_cap: 82000000000, total_volume: 3800000000, market_cap_rank: 5 },
-  { id: 'binancecoin', symbol: 'bnb', name: 'BNB', image: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png', current_price: 425, price_change_percentage_24h: 0.92, market_cap: 65000000000, total_volume: 1900000000, market_cap_rank: 4 },
+  { id: 'bitcoin', symbol: 'btc', name: 'Bitcoin', image: 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/btc.png', current_price: 67450, price_change_percentage_24h: 2.34, market_cap: 1327000000000, total_volume: 28500000000, market_cap_rank: 1 },
+  { id: 'ethereum', symbol: 'eth', name: 'Ethereum', image: 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/eth.png', current_price: 3580, price_change_percentage_24h: 1.87, market_cap: 430000000000, total_volume: 14200000000, market_cap_rank: 2 },
+  { id: 'solana', symbol: 'sol', name: 'Solana', image: 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/sol.png', current_price: 182, price_change_percentage_24h: 4.15, market_cap: 82000000000, total_volume: 3800000000, market_cap_rank: 3 },
+  { id: 'binancecoin', symbol: 'bnb', name: 'BNB', image: 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/bnb.png', current_price: 425, price_change_percentage_24h: 0.92, market_cap: 65000000000, total_volume: 1900000000, market_cap_rank: 4 },
+  { id: 'ripple', symbol: 'xrp', name: 'XRP', image: 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/xrp.png', current_price: 0.62, price_change_percentage_24h: -1.23, market_cap: 34000000000, total_volume: 1200000000, market_cap_rank: 5 },
 ]
 
 export const formatPrice = (price) => {

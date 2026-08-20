@@ -107,11 +107,23 @@ export default function MarketOverview() {
                         <td>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                             <img
-                              src={coin.image}
+                              src={coin.image || `https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/${(coin.symbol || '').toLowerCase()}.png`}
                               alt={`${coin.name} logo`}
                               width="32" height="32"
-                              style={{ borderRadius: '50%' }}
+                              style={{ borderRadius: '50%', objectFit: 'cover' }}
                               loading="lazy"
+                              onError={(e) => {
+                                e.target.onerror = null
+                                const sym = (coin.symbol || '').toLowerCase()
+                                if (!e.target.dataset.triedGithub) {
+                                  e.target.dataset.triedGithub = 'true'
+                                  e.target.src = `https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/${sym}.png`
+                                } else {
+                                  const label = (coin.symbol || coin.name || '?').toUpperCase().slice(0, 4)
+                                  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#1E1E24"/><circle cx="16" cy="16" r="15" fill="none" stroke="#D4AF37" stroke-width="1.5"/><text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="#D4AF37" font-size="10" font-weight="bold" font-family="sans-serif">${label}</text></svg>`
+                                  e.target.src = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
+                                }
+                              }}
                             />
                             <div>
                               <div style={{ fontWeight: 600, fontSize: '14px', color: '#F5F5F5' }}>{coin.name}</div>
