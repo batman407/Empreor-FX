@@ -55,7 +55,7 @@ export default function DashboardPage() {
   const statCards = [
     {
       label: 'Total Portfolio',
-      value: `$${totalPortfolio.toFixed(2)}`,
+      value: `$${Number(totalPortfolio ?? 0).toFixed(2)}`,
       change: '+2.34%',
       isUp: true,
       icon: Wallet,
@@ -63,7 +63,7 @@ export default function DashboardPage() {
     },
     {
       label: accountMode === 'live' ? 'Live Balance' : 'Demo Balance',
-      value: `$${activeBalance.toFixed(2)}`,
+      value: `$${Number(activeBalance ?? 0).toFixed(2)}`,
       change: accountMode === 'live' ? '🔴 Live' : '🟢 Demo',
       isUp: true,
       icon: TrendingUp,
@@ -354,10 +354,10 @@ export default function DashboardPage() {
                   </div>
                   <div style={{ textAlign: 'right' }}>
                     <div style={{ fontSize: '13px', fontWeight: 600, color: tx.type === 'BUY' ? '#FF4D4F' : '#00C896' }}>
-                      {tx.type === 'BUY' ? '-' : '+'}${tx.value.toFixed(2)}
+                      {tx.type === 'BUY' ? '-' : '+'}${Number(tx?.value ?? 0).toFixed(2)}
                     </div>
                     <div style={{ fontSize: '11px', color: '#6B6B78' }}>
-                      {tx.amount.toFixed(6)} {tx.symbol}
+                      {Number(tx?.amount ?? 0).toFixed(6)} {tx.symbol}
                     </div>
                   </div>
                 </div>

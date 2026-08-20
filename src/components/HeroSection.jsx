@@ -216,16 +216,16 @@ export default function HeroSection() {
                   </span>
                   <span style={{
                     fontSize: '12px',
-                    color: coin.price_change_percentage_24h >= 0 ? '#00C896' : '#FF4D4F',
+                    color: Number(coin?.price_change_percentage_24h ?? 0) >= 0 ? '#00C896' : '#FF4D4F',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '3px',
                   }}>
-                    {coin.price_change_percentage_24h >= 0
+                    {Number(coin?.price_change_percentage_24h ?? 0) >= 0
                       ? <TrendingUp size={12} />
                       : <TrendingDown size={12} />
                     }
-                    {coin.price_change_percentage_24h?.toFixed(2)}%
+                    {Number(coin?.price_change_percentage_24h ?? 0).toFixed(2)}%
                   </span>
                 </div>
               ))}
