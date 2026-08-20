@@ -90,7 +90,7 @@ export default function TradePage() {
           color: '#D4AF37',
         }}>
           <AlertCircle size={14} />
-          Demo Mode — Virtual Balance: ${demoBalance.toFixed(2)} USDT | No real funds
+          Demo Mode — Virtual Balance: ${Number(demoBalance ?? 0).toFixed(2)} USDT | No real funds
         </div>
       )}
 
@@ -157,7 +157,7 @@ export default function TradePage() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: isUp ? '#00C896' : '#FF4D4F', fontSize: '14px', fontWeight: 600 }}>
               {isUp ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
-              {priceChange.toFixed(2)}% 24h
+              {Number(priceChange ?? 0).toFixed(2)}% 24h
             </div>
             <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
               {['1H', '4H', '1D', '1W', '1M'].map((tf) => (
@@ -262,7 +262,7 @@ export default function TradePage() {
                     <div key={tx.id} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.03)', fontSize: '12px' }}>
                       <span style={{ color: tx.type === 'BUY' ? '#00C896' : '#FF4D4F', fontWeight: 600 }}>{tx.type}</span>
                       <span style={{ color: '#F5F5F5' }}>{tx.symbol}</span>
-                      <span style={{ color: '#A0A0A8' }}>${tx.value.toFixed(2)}</span>
+                      <span style={{ color: '#A0A0A8' }}>${Number(tx?.value ?? 0).toFixed(2)}</span>
                       <span style={{ color: '#6B6B78' }}>{new Date(tx.time).toLocaleTimeString()}</span>
                     </div>
                   ))
@@ -435,8 +435,8 @@ export default function TradePage() {
                 <div key={symbol} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
                   <span style={{ fontSize: '12px', fontWeight: 600, color: '#F5F5F5' }}>{symbol}</span>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '12px', color: '#A0A0A8' }}>{amount.toFixed(6)}</div>
-                    <div style={{ fontSize: '11px', color: '#6B6B78' }}>${value.toFixed(2)}</div>
+                    <div style={{ fontSize: '12px', color: '#A0A0A8' }}>{Number(amount ?? 0).toFixed(6)}</div>
+                    <div style={{ fontSize: '11px', color: '#6B6B78' }}>${Number(value ?? 0).toFixed(2)}</div>
                   </div>
                 </div>
               )

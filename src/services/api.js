@@ -214,7 +214,7 @@ export const getFallbackData = () => [
 export const formatPrice = (price) => {
   if (price >= 1000) return `$${price.toLocaleString('en-US', { maximumFractionDigits: 2 })}`
   if (price >= 1) return `$${Number(price ?? 0).toFixed(4)}`
-  return `$${price.toFixed(6)}`
+  return `$${Number(price ?? 0).toFixed(6)}`
 }
 
 export const formatMarketCap = (cap) => {

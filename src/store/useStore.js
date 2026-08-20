@@ -148,7 +148,7 @@ const useStore = create((set, get) => ({
         ...get().demoTransactions,
       ],
     })
-    return { success: true, msg: `Bought ${coins.toFixed(6)} ${symbol}` }
+    return { success: true, msg: `Bought ${Number(coins ?? 0).toFixed(6)} ${symbol}` }
   },
 
   sellAsset: (symbol, amount, price) => {
@@ -164,7 +164,7 @@ const useStore = create((set, get) => ({
         ...get().demoTransactions,
       ],
     })
-    return { success: true, msg: `Sold ${amount.toFixed(6)} ${symbol}` }
+    return { success: true, msg: `Sold ${Number(amount ?? 0).toFixed(6)} ${symbol}` }
   },
 }))
 

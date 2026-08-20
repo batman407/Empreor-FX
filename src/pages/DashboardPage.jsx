@@ -280,7 +280,7 @@ export default function DashboardPage() {
                       ))}
                     </Pie>
                     <Tooltip
-                      formatter={(v) => [`$${v.toFixed(2)}`, '']}
+                      formatter={(v) => [`$${Number(v ?? 0).toFixed(2)}`, '']}
                       contentStyle={{
                         background: '#1C1C24', border: '1px solid rgba(212,175,55,0.2)',
                         borderRadius: '8px', fontSize: '13px',

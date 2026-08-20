@@ -135,7 +135,7 @@ export default function MarketOverview() {
                             borderRadius: '6px',
                           }}>
                             {isUp ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
-                            {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
+                            {Math.abs(Number(coin?.price_change_percentage_24h ?? 0)).toFixed(2)}%
                           </span>
                         </td>
                         <td style={{ color: '#A0A0A8', fontSize: '13px' }}>{formatMarketCap(coin.market_cap)}</td>
