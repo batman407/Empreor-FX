@@ -421,7 +421,7 @@ export default function TradePage() {
           {/* Balance display */}
           <div style={{ marginTop: '16px', padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px' }}>
             <div style={{ fontSize: '11px', color: '#6B6B78', marginBottom: '6px' }}>AVAILABLE BALANCE</div>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: '#D4AF37' }}>${demoBalance.toFixed(2)} USDT</div>
+            <div style={{ fontSize: '16px', fontWeight: 700, color: '#D4AF37' }}>${${Number(demoBalance ?? 0).toFixed(2)} USDT</div>
           </div>
 
           {/* Portfolio */}
